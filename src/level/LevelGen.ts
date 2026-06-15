@@ -1,7 +1,7 @@
 export const TileIds = {
   grass: 0, rock: 1, water: 2, flower: 3, tree: 4, dirt: 5, sand: 6, cactus: 7,
-  hole: 8, lava: 13, stairsDown: 14, stairsUp: 15, cloud: 16, ironOre: 17, goldOre: 18,
-  pinetree: 25, snow: 27, snowpinetree: 28
+  hole: 8, infiniteFall: 9, lava: 13, stairsDown: 14, stairsUp: 15, cloud: 16, ironOre: 17, goldOre: 18,
+  pinetree: 25, cloudCactus: 26, snow: 27, snowpinetree: 28
 };
 
 export class LevelGen {
@@ -232,21 +232,63 @@ export class LevelGen {
   }
 
   public static createSkyMap(w: number, h: number): { map: Uint8Array, data: Uint8Array } {
+    const noise1 = new LevelGen(w, h, 8);
+    const noise2 = new LevelGen(w, h, 8);
+
     const map = new Uint8Array(w * h);
     const data = new Uint8Array(w * h);
 
-    for (let i = 0; i < w * h; i++) {
-        map[i] = TileIds.cloud;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        let i = x + y * w;
+
+        let val = Math.abs(noise1.values[i] - noise2.values[i]) * 3 - 2;
+
+        let xd = (x / (w - 1.0)) * 2 - 1;
+        let yd = (y / (h - 1.0)) * 2 - 1;
+        if (xd < 0) xd = -xd;
+        if (yd < 0) yd = -yd;
+        let dist = xd >= yd ? xd : yd;
+        dist = dist * dist * dist * dist;
+        dist = dist * dist * dist * dist;
+        val = -val * 1 - 2.2;
+        val = val + 1 - dist * 20;
+
+        if (val < -0.25) {
+          map[i] = TileIds.infiniteFall;
+        } else {
+          map[i] = TileIds.cloud;
+        }
+      }
     }
 
-    // Add some "holes" or different cloud patterns?
-    // In original it's just Cloud tiles and Cloud Cactus.
+    stairsLoop: for (let i = 0; i < (w * h) / 50; i++) {
+      let x = Math.floor(Math.random() * (w - 2)) + 1;
+      let y = Math.floor(Math.random() * (h - 2)) + 1;
 
-    // Add stairs down
-    for (let i = 0; i < 2; i++) {
-        let x = Math.floor(Math.random() * w);
-        let y = Math.floor(Math.random() * h);
-        map[y * w + x] = TileIds.stairsDown;
+      for (let yy = y - 1; yy <= y + 1; yy++) {
+        for (let xx = x - 1; xx <= x + 1; xx++) {
+          if (map[xx + yy * w] !== TileIds.cloud) continue stairsLoop;
+        }
+      }
+
+      map[x + y * w] = TileIds.cloudCactus;
+    }
+
+    let count = 0;
+    stairsLoop: for (let i = 0; i < w * h; i++) {
+      let x = Math.floor(Math.random() * (w - 2)) + 1;
+      let y = Math.floor(Math.random() * (h - 2)) + 1;
+
+      for (let yy = y - 1; yy <= y + 1; yy++) {
+        for (let xx = x - 1; xx <= x + 1; xx++) {
+          if (map[xx + yy * w] !== TileIds.cloud) continue stairsLoop;
+        }
+      }
+
+      map[x + y * w] = TileIds.stairsDown;
+      count++;
+      if (count === 2) break;
     }
 
     return { map, data };

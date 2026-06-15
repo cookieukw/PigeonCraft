@@ -19,6 +19,8 @@ import { WoodWallTile } from '@/level/tile/WoodWallTile';
 import { WoodDoorTile } from '@/level/tile/WoodDoorTile';
 import { Resources } from '@/item/resource/Resource';
 import { SaplingTile } from '@/level/tile/SaplingTile';
+import { InfiniteFallTile } from '@/level/tile/InfiniteFallTile';
+import { CloudCactusTile } from '@/level/tile/CloudCactusTile';
 import type { Tile } from '@/level/tile/Tile';
 
 // Initialize basic tiles
@@ -44,6 +46,8 @@ export const Tiles: Record<string, Tile> = {
   woodPlank: new WoodPlankTile(20),
   woodWall: new WoodWallTile(21),
   woodDoor: new WoodDoorTile(22),
+  infiniteFall: new InfiniteFallTile(9),
+  cloudCactus: new CloudCactusTile(26),
 };
 
 Tiles.treeSapling = new SaplingTile(23, Tiles.grass, Tiles.tree);
