@@ -38,6 +38,27 @@ export class Entity {
 
   protected moveInternal(xa: number, ya: number): boolean {
     if (!this.level) return false;
+    
+    let xto0 = (this.x - this.xr) >> 4;
+    let yto0 = (this.y - this.yr) >> 4;
+    let xto1 = (this.x + this.xr) >> 4;
+    let yto1 = (this.y + this.yr) >> 4;
+
+    let xt0 = ((this.x + xa) - this.xr) >> 4;
+    let yt0 = ((this.y + ya) - this.yr) >> 4;
+    let xt1 = ((this.x + xa) + this.xr) >> 4;
+    let yt1 = ((this.y + ya) + this.yr) >> 4;
+    
+    for (let yt = yt0; yt <= yt1; yt++) {
+      for (let xt = xt0; xt <= xt1; xt++) {
+        if (xt >= xto0 && xt <= xto1 && yt >= yto0 && yt <= yto1) continue;
+        const tile = this.level.getTile(xt, yt);
+        if (tile && tile.bumpedInto) {
+          tile.bumpedInto(this.level, xt, yt, this);
+        }
+      }
+    }
+
     if (this.level.isFree(this.x + xa, this.y + ya, this.xr, this.yr, this)) {
       this.x += xa;
       this.y += ya;

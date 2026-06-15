@@ -22,6 +22,8 @@ export class Tile {
   public hurt(_level: Level, _x: number, _y: number, _source: Entity | null, _dmg: number, _dir: number): void {}
   public interact(_level: Level, _x: number, _y: number, _player: Player, _item: Item | null, _dir: number): boolean { return false; }
   public getMapColor(_level: Level, _x: number, _y: number): number { return 0; }
+  public bumpedInto?(_level: Level, _x: number, _y: number, _entity: Entity): void;
+  public steppedOn?(_level: Level, _x: number, _y: number, _entity: Entity): void;
   public tick?(_level: Level, _x: number, _y: number): void;
   public getLightRadius?(_level: Level, _x: number, _y: number): number;
 }

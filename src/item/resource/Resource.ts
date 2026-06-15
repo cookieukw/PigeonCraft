@@ -31,6 +31,7 @@ export const Resources = {
   gold: new Resource("GOLD", 139, Color.get(-1, 110, 330, 553)),
   slime: new Resource("SLIME", 138, Color.get(-1, 10, 30, 50)),
   gem: new Resource("gem", 141, Color.get(-1, 101, 404, 545)),
+  cactusFlower: new Resource("Cactus", 4 + 4 * 32, Color.get(-1, 10, 40, 50)),
   acorn: new Resource("Acorn", 131, Color.get(-1, 100, 531, 320)),
   bread: new Resource("Bread", 135, Color.get(-1, 110, 330, 550)),
   seeds: new Resource("Seeds", 134, Color.get(-1, 10, 40, 50)),

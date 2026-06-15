@@ -1,5 +1,6 @@
 import { GrassTile } from '@/level/tile/GrassTile';
 import { RockTile } from '@/level/tile/RockTile';
+import { CactusTile } from '@/level/tile/CactusTile';
 import { WaterTile } from '@/level/tile/WaterTile';
 import { FlowerTile } from '@/level/tile/FlowerTile';
 import { TreeTile } from '@/level/tile/TreeTile';
@@ -28,7 +29,7 @@ export const Tiles: Record<string, Tile> = {
   tree: new TreeTile(4),
   dirt: new DirtTile(5),
   sand: new SandTile(6),
-  cactus: new RockTile(7),
+  cactus: new CactusTile(7),
   lava: new LavaTile(13),
   stairsDown: new StairsTile(14, false),
   stairsUp: new StairsTile(15, true),
