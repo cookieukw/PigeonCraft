@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 /app
+/app2
+roteiro_video.md
+compare_files.py
