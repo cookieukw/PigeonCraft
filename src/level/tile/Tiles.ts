@@ -18,6 +18,7 @@ import { WoodPlankTile } from '@/level/tile/WoodPlankTile';
 import { WoodWallTile } from '@/level/tile/WoodWallTile';
 import { WoodDoorTile } from '@/level/tile/WoodDoorTile';
 import { Resources } from '@/item/resource/Resource';
+import { SaplingTile } from '@/level/tile/SaplingTile';
 import type { Tile } from '@/level/tile/Tile';
 
 // Initialize basic tiles
@@ -44,3 +45,6 @@ export const Tiles: Record<string, Tile> = {
   woodWall: new WoodWallTile(21),
   woodDoor: new WoodDoorTile(22),
 };
+
+Tiles.treeSapling = new SaplingTile(23, Tiles.grass, Tiles.tree);
+Tiles.cactusSapling = new SaplingTile(24, Tiles.sand, Tiles.cactus);

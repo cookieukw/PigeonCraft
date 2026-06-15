@@ -59,6 +59,22 @@ Resources.seeds.interactOn = (tile, level, xt, yt, _player) => {
     return false;
 };
 
+Resources.acorn.interactOn = (tile, level, xt, yt, _player) => {
+    if (tile.id === 0) { // Grass
+        level.setTile(xt, yt, 23, 0); // treeSapling
+        return true;
+    }
+    return false;
+};
+
+Resources.cactusFlower.interactOn = (tile, level, xt, yt, _player) => {
+    if (tile.id === 6) { // Sand
+        level.setTile(xt, yt, 24, 0); // cactusSapling
+        return true;
+    }
+    return false;
+};
+
 // Placeable construction tiles — use on grass/dirt/sand
 const _placeOn = (tileId: number) => (tile: Tile, level: Level, xt: number, yt: number, _player: Player) => {
     if (tile.mayPass && tile.mayPass(level, xt, yt, { canSwim: () => true } as any)) {
